@@ -1,0 +1,80 @@
+Modern applications depend on dozens of services and face unpredictable load patterns. When systems degrade, naive retry strategies can transform partial outages into complete failures through retry storms or resource exhaustion.
+
+This talk offers practical solutions for building truly resilient systems by exploring:
+
+1. **Exponential Back-off Fundamentals**
+   - Why linear or fixed retries create "thundering herd" problems
+   - How exponential back-off prevents amplifying system stress
+   - Adding jitter (randomness) to prevent synchronized retry patterns
+   - Implementation patterns in Python using standard library, asyncio, and packages like tenacity and backoff
+
+2. **The Counterintuitive Value of Giving Up**
+   - Why persistent retrying often makes congestion worse
+   - Circuit breaker patterns with Python libraries like pybreaker and CircuitPython
+   - Strategic load shedding techniques in Python services that preserve core functionality
+   - How quick abandonment leads to faster recovery
+
+3. **Putting It All Together**
+   - Combining back-off and load shedding in a unified resilience strategy
+   - Configuring appropriate timeouts with back-off in Python services
+   - Instrumentation and monitoring
+
+The talk includes practical Python code samples and configuration examples for common Python web frameworks and async services.
+
+Attendees will leave with:
+- Python implementation patterns for exponential back-off with jitter they can immediately apply
+- Strategies for identifying which operations can be safely abandoned during degradation
+- Python tools and libraries for measuring and quantifying the impact of different retry policies
+- A mental framework for thinking about system resilience holistically in Python applications
+
+UPDATED FROM SPEAKER:
+
+
+# Back off and Give up: The Art of Graceful System Degradation
+[cut down to 25m]
+
+## Opening (2 minutes)
+**0:00 - 2:00**
+- Hook: "What if I told you the secret to building resilient systems is learning when to quit?"
+- Brief story about a system that failed due to aggressive retries
+- Outline what we'll cover: back-off strategies and strategic abandonment
+
+## Part 1: The Problem with Naive Retries (4 minutes)
+**2:00 - 6:00**
+- Example: Simple Python retry loop that creates thundering herd
+- How multiple clients retrying simultaneously overwhelm recovering services
+- The core problem: retries can amplify failures
+- Common retry anti-patterns in Python applications
+
+## Part 2: Exponential Back-off with Jitter (6 minutes)
+**6:00 - 12:00**
+- **Theory (2 minutes)**: Why exponential back-off works
+- **Python Implementation (3 minutes)**:
+  - Basic exponential back-off with `time.sleep()`
+  - Adding jitter with `random.uniform()`
+  - Using the `tenacity` library for production code
+- **Jitter Deep Dive (1 minutes)**: 
+  - Full jitter vs equal jitter
+  - Comparison of retry timing patterns with/without jitter
+
+## Part 3: Strategic Giving Up (8 minutes)
+**12:00 - 20:00**
+- **Circuit Breaker Pattern (4 minutes)**:
+  - Python implementation with `pybreaker`
+  - Circuit opening after failure threshold
+  - Half-open state for testing recovery
+- **Load Shedding Strategies (4 minutes)**:
+  - Request prioritization (shed background tasks first)
+  - Graceful degradation examples
+  - Python decorator for optional operations
+
+## Part 4: Putting It All Together (3 minutes)
+**20:00 - 23:00**
+- Real-world configuration example
+- Monitoring and observability with Python metrics
+- Key takeaway: Failing fast often means recovering faster
+
+## Wrap-up & Questions (2 minutes)
+**23:00 - 25:00**
+- Summary: "Back off intelligently, give up strategically"
+- Resources: Links to Python libraries and further reading
